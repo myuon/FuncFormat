@@ -1,15 +1,16 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE QuasiQuotes #-}
-import StrFormat
+{-# LANGUAGE OverloadedStrings #-}
+import Data.Text.FuncFormat
+import Data.Text.FuncFormat.Internal
+import Data.Text
 import Control.Lens
-
-import Debug.Trace
 
 -- [format| {_1}|] f (a,b) == show $ f _1 (a,b)
 
-main = putStrLn $ [format| {_1}!|] (\x (y,z) -> set x y z) ("hello", (10,100))
--- (hello,100)!
+main = putStrLn $ unpack $ [format|Embedded: { _1 } Message: { _2 }|] view view ("hello", 100)
+-- Embedded: hello Message: 100
 
--- main = putStrLn $ [format| {_1}!|] (\x y -> view x y) ("hello", (10,100))
--- hello!
+-- main = putStrLn $ unpack $ [format|{_1}!|] (\x (y,z) -> set x y z) ("hello", (10,100))
+-- (hello,100)!
 
