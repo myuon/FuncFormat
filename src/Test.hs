@@ -2,7 +2,6 @@
 {-# LANGUAGE QuasiQuotes #-}
 {-# LANGUAGE OverloadedStrings #-}
 import Data.Text.FuncFormat
-import Data.Text.FuncFormat.Internal
 import Data.Text
 import Control.Lens
 

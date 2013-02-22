@@ -1,4 +1,4 @@
-Strformat
+Textformat
 ======================
 
 Want to format like `string.format` in Python in Haskell program? Use this!
@@ -9,25 +9,29 @@ Here is a tiny sample.
 
 ```haskell
 {-# LANGUAGE QuasiQuotes #-}
-import StrFormat
+{-# LANGUAGE OverloadedStrings #-}
+import Data.Text.FuncFormat
+import Data.Text
 import Control.Lens
 
--- [format| {_1}|] f (a,b) == show $ f _1 (a,b)
+-- [format| {_1} |] f (a,b) == pack $ show $ f _1 (a,b)
 
-main = putStrLn $ [format| {_1}, {_2}!|] view ("hello", "world")
+main = putStrLn $ unpack $ [format| {_1}, {_2}!|] view view ("hello", "world")
 -- output: hello, world!
 ```
 
 I strongly recommend you import `Control.Lens` ([Lens package](http://hackage.haskell.org/package/lens )) so that this `format` function can be easy to handle.
 
-**Be careful!** Do not forget to GHC extension `{-# LANGUAGE QuasiQuotes #-}` at first line in your .hs file.
+**Be careful!**
+Do not forget to declare GHC extensions `{-# LANGUAGE QuasiQuotes #-}` and `{-# LANGUAGE OverloadedStrings #-}` at first line in your .hs file.
 
 How does it works
 -----------------
 There is only one expression to use this `format`:  
 ```haskell
-[format| {f}|] g t == show $ f g t
+[format| {f1} {f2}|] g1 g2 t == pack $ show (f1 g1 t) ++ show (f2 g2 t)
 ```
+`format` returns Text (from [Data.Text](http://hackage.haskell.org/package/text))
 
 Then, if you just want to show the elements of a tuple:  
 ```haskell
