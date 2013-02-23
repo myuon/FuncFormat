@@ -14,7 +14,6 @@ import Control.Monad (replicateM)
 import Control.Applicative hiding (many)
 
 import qualified Data.Text as T
-import qualified Data.Text.Formattable as F
 
 type FString = String
 data Format = Normal String
@@ -63,7 +62,7 @@ parseExp s = case parse formatExpr "" s of
         nfs <- replicateM (length $ filter isFunc xs) $ newName "f"
         let fm = foldr appE [| "" |] $ buildExp nx nfs xs
         lamE (map varP nfs ++ [varP nx]) fm
-      False -> [| putStrLn $(litE $ stringL $ T.unpack s) |]
+      False -> [| T.pack $(litE $ stringL $ T.unpack s) |]
 
 buildExp :: Name -> [Name] -> [Format] -> [ExpQ]
 buildExp nx ff@(f:fs) (x:xs) = let (e, isF) = toExpQ x f nx in
