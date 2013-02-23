@@ -24,7 +24,7 @@ source-repository head
 library
   exposed-modules:     Text.FuncFormat
     , Text.FuncFormat.Internal
-  build-depends:       base ==4.5.*
+  build-depends:       base ==4.*
     , text ==0.11.*
     , template-haskell ==2.7.*
     , parsec ==3.1.*
