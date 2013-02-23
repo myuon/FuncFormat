@@ -1,4 +1,4 @@
-Textformat
+FuncFormat
 ======================
 
 Want to format like `string.format` in Python in Haskell program? Use this!
@@ -10,7 +10,7 @@ Here is a tiny sample.
 ```haskell
 {-# LANGUAGE QuasiQuotes #-}
 {-# LANGUAGE OverloadedStrings #-}
-import Data.Text.FuncFormat
+import Text.FuncFormat
 import Data.Text
 import Control.Lens
 
